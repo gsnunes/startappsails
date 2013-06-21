@@ -1,0 +1,2 @@
+# startappsails
+### a Sails application
