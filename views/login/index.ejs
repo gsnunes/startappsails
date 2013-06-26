@@ -11,12 +11,13 @@
     </div> <!-- /container -->
 
 <script>
-  $("#loginButton").click(function(){
+  $("#loginButton").click(function(ev){
+    ev.preventDefault();
     var username = $("#loginName").val();
     var password = $("#loginPassword").val();
     if (username && password) {
       $.post(
-        '/login',
+        '/user/login',
         {username: username, password:password},
         function () {
           window.location = "/home";
@@ -29,12 +30,13 @@
     }
   });
 
-  $("#signupButton").click(function(){
+  $("#signupButton").click(function(ev){
+    ev.preventDefault();
     var username = $("#loginName").val();
     var password = $("#loginPassword").val();
     if (username && password) {
         $.post(
-          '/signup',
+          '/user/signup',
           {username: username, password:password},
           function () {
             window.location = "/home";
