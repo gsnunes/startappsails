@@ -4,6 +4,5 @@
 * Below, use the string name of the middleware
 */
 module.exports.policies = {	
-	'*': true,
-	'messages': 'MessagesPolicy'
+	'*': 'authenticated'
 };

@@ -2,14 +2,17 @@
 * Allow any authenticated user.
 */
 module.exports = function (req,res,ok) {
-	
-	// User is allowed, proceed to controller
-	if (req.session.authenticated) {
-		return ok();
-	}
+	var allowedControllers = ['main', 'user'];
 
-	// User is not allowed
+	if (allowedControllers.indexOf(req.route.params.controller) == -1) {
+		if (req.session.user) {
+			return ok();
+		}
+		else {
+			res.redirect('/');
+		}
+	}
 	else {
-		return res.send("You are not permitted to perform this action.",403);
+		return ok();
 	}
 };

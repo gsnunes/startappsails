@@ -4,17 +4,7 @@
 ---------------------*/
 var UserController = {
 
-	index: function (req, res) {
-		if (!req.session.user) {
-			res.view('login');
-		}
-		else {
-			res.redirect('/home');
-		}
-	},
-
-
-	signup: function (req, res) {
+	create: function (req, res) {
 		var username = req.param('username');
 		var password = req.param('password');
 
