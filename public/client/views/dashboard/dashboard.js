@@ -1,4 +1,4 @@
-define(['text!templates/dashboard/dashboard.ejs'], function(template) {
+define(['text!templates/dashboard/dashboard.html'], function(template) {
   'use strict';
 
   var DashboardView = Backbone.View.extend({

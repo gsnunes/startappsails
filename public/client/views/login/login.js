@@ -1,4 +1,4 @@
-define(['text!templates/login/login.ejs'], function (template) {
+define(['text!templates/login/login.html'], function (template) {
 
 'use strict';
 
@@ -23,7 +23,7 @@ var LoginView = Backbone.View.extend({
 
 		if (username.val() && password.val()) {
 			$.post(action, {username: username.val(), password: password.val()}, function (res) {
-				window.location = '/';
+				location.hash = '#/dashboard';
 			}).fail(function (res) {
 				alert('Error: ' + res.getResponseHeader('error'));
 			});

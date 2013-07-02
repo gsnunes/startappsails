@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: 'bust=' +  (new Date()).getTime(),
+    urlArgs: 'bust=' + (new Date()).getTime(),
 	paths: {
         text: '/components/requirejs-text/text',
         templates: '/templates',
@@ -26,10 +26,10 @@ require.config({
 });
 
 
-require(['backbone', 'bootstrap'], function(Backbone) {
+require(['backbone', 'bootstrap'], function (Backbone) {
     'use strict';
 
-    if (!logged) {
+    if (!authenticated) {
         location.hash = '#/login';
     }
     else {
@@ -44,12 +44,12 @@ require(['backbone', 'bootstrap'], function(Backbone) {
 
     var app_router = new AppRouter;
 
-    app_router.on('route:redirect', function(uri_segment) {
-        if (!logged && uri_segment != 'login') {
+    app_router.on('route:redirect', function (uri_segment) {
+        if ((!authenticated && uri_segment != 'login') || (authenticated && uri_segment == 'login')) {
             location = '/';
         }
         else {
-            require(['/client/views/' + uri_segment + '/' + uri_segment + '.js'], function(AppView) {
+            require(['/client/views/' + uri_segment + '/' + uri_segment + '.js'], function (AppView) {
                 var app_view = new AppView;
                 $("#main").html(app_view.$el);
             });

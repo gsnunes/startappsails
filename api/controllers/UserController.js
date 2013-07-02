@@ -1,5 +1,5 @@
 /*---------------------
-	:: Login 
+	:: User 
 	-> controller
 ---------------------*/
 var UserController = {

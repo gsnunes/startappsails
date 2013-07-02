@@ -5,7 +5,7 @@
 var MainController = {
 
 	index: function (req, res) {
-		res.view('main', {logged: req.session.user ? true : false});
+		res.view({authenticated: req.session.user ? true : false});
 	}
 
 };
