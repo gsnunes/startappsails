@@ -1,18 +1,20 @@
-define(['text!templates/dashboard/dashboard.html'], function(template) {
-  'use strict';
+define(['text!templates/dashboard/dashboard.html', '/client/views/components/NavbarComponent.js'], function(template, NavbarComponent) {
+'use strict';
 
-  var DashboardView = Backbone.View.extend({
-    el: $(template),
+var DashboardView = Backbone.View.extend({
 
-    events: {
-    },
+	el: $(template),
 
-    initialize: function() {
-      
-    }
 
-  });
+	events: {
+	},
 
-  return DashboardView;
+
+	initialize: function() {
+	}
+
+});
+
+return DashboardView;
 
 });

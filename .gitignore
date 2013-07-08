@@ -48,4 +48,4 @@ config/local.js
 ########################
 # assets / bower components
 ########################
-public/components
+public/bower_components

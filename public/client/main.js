@@ -1,13 +1,13 @@
 require.config({
     urlArgs: 'bust=' + (new Date()).getTime(),
 	paths: {
-        text: '/components/requirejs-text/text',
+        text: '/bower_components/requirejs-text/text',
         templates: '/templates',
 
-        jquery: '/components/jquery/jquery',
-        underscore: '/components/underscore/underscore',
-        backbone: '/components/backbone/backbone',
-        bootstrap: '/components/bootstrap/docs/assets/js/bootstrap'
+        jquery: '/bower_components/jquery/jquery',
+        underscore: '/bower_components/underscore/underscore',
+        backbone: '/bower_components/backbone/backbone',
+        bootstrap: '/bower_components/bootstrap/docs/assets/js/bootstrap'
     },
     shim: {
         backbone: {
@@ -26,7 +26,7 @@ require.config({
 });
 
 
-require(['backbone', 'bootstrap'], function (Backbone) {
+require(['backbone', 'bootstrap', '/client/views/components/MainContainer.js'], function (Backbone, Bootstrap, MainContainer) {
     'use strict';
 
     if (!authenticated) {
@@ -49,10 +49,7 @@ require(['backbone', 'bootstrap'], function (Backbone) {
             location = '/';
         }
         else {
-            require(['/client/views/' + uri_segment + '/' + uri_segment + '.js'], function (AppView) {
-                var app_view = new AppView;
-                $("#main").html(app_view.$el);
-            });
+            var main = new MainContainer({uri_segment: uri_segment});
         }
     });
 

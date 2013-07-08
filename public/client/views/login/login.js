@@ -8,8 +8,8 @@ var LoginView = Backbone.View.extend({
 
 
 	events: {
-		'click button[name="btn-login"]': 'submit',
-		'click button[name="btn-create"]': 'submit'
+		'click button[name="btn-signin"]': 'submit',
+		'click button[name="btn-signup"]': 'submit'
 	},
 
 
@@ -19,7 +19,7 @@ var LoginView = Backbone.View.extend({
 		var username = this.$el.find('input[name="username"]');
 		var password = this.$el.find('input[name="password"]');
 		
-		var action = ev.target.name == 'btn-login' ? '/user/login' : '/user/create';
+		var action = ev.target.name == 'btn-signin' ? '/user/signin' : '/user/signup';
 
 		if (username.val() && password.val()) {
 			$.post(action, {username: username.val(), password: password.val()}, function (res) {

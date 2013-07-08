@@ -4,7 +4,7 @@
 ---------------------*/
 var UserController = {
 
-	create: function (req, res) {
+	signup: function (req, res) {
 		var username = req.param('username');
 		var password = req.param('password');
 
@@ -33,7 +33,7 @@ var UserController = {
 	},
 
 
-	login: function (req, res) {
+	signin: function (req, res) {
 		var username = req.param('username');
 		var password = req.param('password');
 
@@ -58,6 +58,12 @@ var UserController = {
 				}
 			}
 		});
+	},
+
+
+	signout: function (req, res) {
+		req.session.destroy();
+		res.send();
 	}
 
 };
