@@ -13,7 +13,12 @@ var NavbarComponentView = Backbone.View.extend({
 
 
 	initialize: function () {
+		this.setUsername();
+	},
 
+
+	setUsername: function () {
+		this.$el.find('.dropdown-toggle-username').html(session.user.username);
 	},
 
 

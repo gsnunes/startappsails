@@ -29,7 +29,7 @@ require.config({
 require(['backbone', 'bootstrap', '/client/views/components/MainContainer.js'], function (Backbone, Bootstrap, MainContainer) {
     'use strict';
 
-    if (!authenticated) {
+    if (!session.user) {
         location.hash = '#/login';
     }
     else {
@@ -45,7 +45,7 @@ require(['backbone', 'bootstrap', '/client/views/components/MainContainer.js'], 
     var app_router = new AppRouter;
 
     app_router.on('route:redirect', function (uri_segment) {
-        if ((!authenticated && uri_segment != 'login') || (authenticated && uri_segment == 'login')) {
+        if ((!session.user && uri_segment != 'login') || (session.user && uri_segment == 'login')) {
             location = '/';
         }
         else {
