@@ -5,7 +5,10 @@
 module.exports = {
 
 	attributes: {
-		name: 'STRING'
+		name: 'STRING',
+		parent: 'JSON',
+		href: 'STRING',
+		required: 'BOOLEAN'
 	}
 
 };

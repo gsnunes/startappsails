@@ -30,10 +30,25 @@ var MigrationsView = Backbone.View.extend({
 
 
 	initialNavigationStructure: function () {
-		this.navigationCollection.create({name: 'Dashboard'});
-		this.navigationCollection.create({name: 'Logged in as'});
-		this.navigationCollection.create({name: 'Settings'});
-		this.navigationCollection.create({name: 'Sign out'});
+		var self = this;
+		
+		this.navigationCollection.create({name: 'Dashboard', href: '#/dashboard', required: true}, {
+		    success: function (data) {
+				self.navigationCollection.create({name: 'Logged in as', required: true, parent: data.attributes}, {
+				    success: function (data) {
+						self.navigationCollection.create({name: 'Settings', href: '#/settings', required: true, parent: data.attributes}, {
+						    success: function (data) {
+								self.navigationCollection.create({name: 'Sign out', required: true, parent: data.attributes}, {
+								    success: function (data) {
+										console.log('initialNavigationStructure');
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
 	}
 
 });

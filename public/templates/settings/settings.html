@@ -5,8 +5,13 @@
 		<fieldset>
 			<legend>Navigation</legend>
 
+			<input type="hidden" name="id" />
+
 			<label>Item name</label>
 			<input type="text" placeholder="Type something…" name="name">
+
+			<label>Item Parent</label>
+			<select name="parent"></select>
 			
 			<div>
 				<button type="submit" class="btn">Submit</button>
@@ -42,8 +47,10 @@
 			<tr>
 				<th>#</th>
 				<th>Name</th>
+				<th>Parent</th>
 				<th>createdAt</th>
 				<th>updatedAt</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
