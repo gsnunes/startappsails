@@ -4,8 +4,6 @@ define(function () {
 
 var NavigationModel = Backbone.Model.extend({
 
-	urlRoot: '/navigation'
-
 });
 
 return NavigationModel;

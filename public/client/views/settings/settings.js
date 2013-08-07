@@ -1,4 +1,4 @@
-define(['text!templates/settings/settings.html', 'collections/NavigationCollection', 'bower_components/jstree/dist/jstree'], function (template, NavigationCollection) {
+define(['text!templates/settings/settings.html', 'collections/NavigationCollection'], function (template, NavigationCollection) {
 
 'use strict';
 
@@ -23,26 +23,12 @@ var SettingsView = Backbone.View.extend({
 		this.collection.fetch({
 		    success: function(collection, response) {
 		        for (var i = 0; i < response.length; i++) {
-		        	rows += '<li id="' + response[i].id + '"><a href="#">' + response[i].name + '</a></li>';
-		        }
-
-		        self.$el.find('#treeview ul').html(rows);
-		        self.$el.find('#treeview').jstree({core: {themes: {dir: 'bower_components/jstree/src/themes'}}});
-		    }
-		});
-
-		/*
-		var rows = '', self = this;
-		this.collection.fetch({
-		    success: function(collection, response) {
-		        for (var i = 0; i < response.length; i++) {
 		        	rows += '<tr><td>' + response[i].id + '</td><td>' + response[i].name + '</td><td>' + response[i].createdAt + '</td><td>' + response[i].updatedAt + '</td></tr>';
 		        }
 
 		        self.$el.find('table tbody').html(rows);
 		    }
 		});
-		*/
 	},
 
 

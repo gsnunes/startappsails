@@ -8,8 +8,7 @@
     "modernizr": "2.6.2",
     "backbone": "1.0.0",
     "underscore": "1.4.4",
-    "bootstrap": "2.3.1",
-    "jstree": "2.0.0"
+    "bootstrap": "2.3.1"
   },
   "devDependencies": {}
 }
