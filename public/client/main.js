@@ -13,7 +13,8 @@ require.config({
 
         bower_components: '/bower_components',
 
-        container: '/client/views/components/MainContainer'
+        container: '/client/views/components/MainContainer',
+        migrations: '/client/views/Migrations'
     },
     shim: {
         backbone: {
@@ -36,14 +37,18 @@ require.config({
 });
 
 
-require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, MainContainer) {
+require(['backbone', 'bootstrap', 'container', 'migrations'], function (Backbone, Bootstrap, MainContainer, Migrations) {
     'use strict';
+
+    var migrations = new Migrations();
 
     if (!session.user) {
         location.hash = '#/login';
     }
     else {
-        location.hash = '#/dashboard';
+        if (!location.hash) {
+            location.hash = '#/dashboard';
+        }
     }
 
     var AppRouter = Backbone.Router.extend({
