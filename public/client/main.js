@@ -3,11 +3,17 @@ require.config({
 	paths: {
         text: '/bower_components/requirejs-text/text',
         templates: '/templates',
+        collections: '/client/collections',
+        models: '/client/models',
 
         jquery: '/bower_components/jquery/jquery',
         underscore: '/bower_components/underscore/underscore',
         backbone: '/bower_components/backbone/backbone',
-        bootstrap: '/bower_components/bootstrap/docs/assets/js/bootstrap'
+        bootstrap: '/bower_components/bootstrap/docs/assets/js/bootstrap',
+
+        bower_components: '/bower_components',
+
+        container: '/client/views/components/MainContainer'
     },
     shim: {
         backbone: {
@@ -21,12 +27,16 @@ require.config({
 
         bootstrap: {
             deps: ['jquery']
+        },
+
+        container: {
+            deps: ['backbone']
         }
     }
 });
 
 
-require(['backbone', 'bootstrap', '/client/views/components/MainContainer.js'], function (Backbone, Bootstrap, MainContainer) {
+require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, MainContainer) {
     'use strict';
 
     if (!session.user) {
