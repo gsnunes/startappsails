@@ -5,7 +5,7 @@ define(function () {
 var NavigationModel = Backbone.Model.extend({
 
 	defaults: {
-		href: '#',
+		href: 'javascript:;',
 		required: false,
 		parent: null
 	}

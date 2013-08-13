@@ -11,12 +11,23 @@ var SettingsView = Backbone.View.extend({
 
 
 	events: {
-		'click form[name="navigation"] button': 'submit'
+		'click form[name="navigation"] button': 'submit',
+		'click .drag-nav-items': 'dragNavItems'
 	},
 
 
 	initialize: function () {
 		this.getData();
+	},
+
+
+	dragNavItems: function (ev) {
+		if (!$(ev.currentTarget).hasClass('active')) {
+			console.log('a');
+		}
+		else {
+			console.log('b');
+		}
 	},
 
 
@@ -38,7 +49,7 @@ var SettingsView = Backbone.View.extend({
 		this.collection.forEach(function (data) {
 			var data = data.attributes;
 
-			rows += '<tr><td>' + data.id + '</td><td>' + data.name + '</td><td>' + (data.parent ? data.parent.name : '') + '</td><td>' + data.createdAt + '</td><td>' + data.updatedAt + '</td><td><a href="#" id="' + data.id + '" class="btn-edit">Edit</a> | <a href="#" id="' + data.id + '" class="btn-remove">Remove</a></td></tr>';
+			rows += '<tr><td>' + data.id + '</td><td>' + data.name + '</td><td>' + (data.parent ? data.parent.name : '') + '</td><td>' + data.createdAt + '</td><td>' + data.updatedAt + '</td><td><a href="javascript:;" id="' + data.id + '" class="btn-edit">Edit</a> | <a href="javascript:;" id="' + data.id + '" class="btn-remove">Remove</a></td></tr>';
 		});
 
         this.$el.find('table tbody').html(rows);
