@@ -46,6 +46,7 @@ var SettingsView = Backbone.View.extend({
 	populateTable: function () {
 		var self = this, rows = '';
 
+
 		this.collection.forEach(function (data) {
 			var data = data.attributes;
 
@@ -106,7 +107,7 @@ var SettingsView = Backbone.View.extend({
 		var parentDTO = parent.val() ? this.collection.get(parent.val()) : null;
 
 		if (!id.val()) {
-			this.collection.create({name: name.val(), parent: parentDTO}, {
+			this.collection.create({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null}, {
 			    success: function () {
 			    	id.val('');
 			    	name.val('');
@@ -116,7 +117,7 @@ var SettingsView = Backbone.View.extend({
 				}
 			});
 		} else {
-			this.collection.get(id.val()).save({name: name.val(), parent: parentDTO}, {
+			this.collection.get(id.val()).save({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null}, {
 			    success: function () {
 			    	id.val('');
 			    	name.val('');

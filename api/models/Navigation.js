@@ -8,7 +8,10 @@ module.exports = {
 		name: 'STRING',
 		parent: 'JSON',
 		href: 'STRING',
-		required: 'BOOLEAN'
+		required: 'BOOLEAN',
+		parentId: 'INTEGER',
+		pullRight: 'BOOLEAN',
+		className: 'STRING'
 	}
 
 };

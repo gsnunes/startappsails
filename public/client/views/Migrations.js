@@ -34,11 +34,13 @@ var MigrationsView = Backbone.View.extend({
 		
 		this.navigationCollection.create({name: 'Dashboard', href: '#/dashboard', required: true}, {
 		    success: function (data) {
-				self.navigationCollection.create({name: 'Logged in as', required: true, parent: data.attributes}, {
+				self.navigationCollection.create({name: 'Logged in as', required: true, pullRight: true, className: 'dropdown-toggle-username'}, {
 				    success: function (data) {
-						self.navigationCollection.create({name: 'Settings', href: '#/settings', required: true, parent: data.attributes}, {
+				    	var logged = data.attributes;
+				    	
+						self.navigationCollection.create({name: 'Settings', href: '#/settings', required: true, parent: logged, parentId: logged.id}, {
 						    success: function (data) {
-								self.navigationCollection.create({name: 'Sign out', required: true, parent: data.attributes}, {
+								self.navigationCollection.create({name: 'Sign out', required: true, parent: logged, parentId: logged.id, className: 'btn-signout'}, {
 								    success: function (data) {
 										console.log('initialNavigationStructure');
 									}
