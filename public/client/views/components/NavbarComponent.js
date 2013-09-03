@@ -8,7 +8,8 @@ var NavbarComponentView = Backbone.View.extend({
 
 	navigationCollection: new NavigationCollection,
 
-	navigation: '',
+	navigationLeft: '',
+	navigationRight: '',
 
 	events: {
 		'click a.btn-signout': 'signout'
@@ -37,6 +38,8 @@ var NavbarComponentView = Backbone.View.extend({
 	populateNavbar: function () {
 		var self = this, navItems = new Array();
 
+		this.$el.find('.nav-collapse').html('');
+
 		this.navigationCollection.forEach(function (data) {
 			var item = data.attributes,
 				parentId = item.parent ? item.parent.id : 0;
@@ -48,43 +51,58 @@ var NavbarComponentView = Backbone.View.extend({
 			navItems[parentId][item.id] = item;
 		});
 
-		this.structureNavigation(navItems, 0);
-		this.$el.find('.nav-collapse').html(this.navigation);
+		this.structureNavigationLeft(navItems, 0);
+		this.structureNavigationRight(navItems, 0);
+		this.$el.find('.nav-collapse').append(this.navigationLeft);
+		this.$el.find('.nav-collapse').append(this.navigationRight);
 
 		this.setUsername();
 	},
 
 
 
-	structureNavigation: function (navItems, parentId, isChildren) {
-		this.navigation += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav') + '">';
+	structureNavigationRight: function (navItems, parentId, isChildren) {
+		this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav pull-right') + '">';
 
 		for (var itemId in navItems[parentId]) {
 			var hasChildren = navItems[itemId],
-				current = navItems[parentId][itemId];
+					current = navItems[parentId][itemId];
 
-			if (current.pullRight) {
-				this.navigation += '<ul class="nav pull-right">';
-			}
+			if (current.pullRight || isChildren) {
+				this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren ? ' <b class="caret"></b>' : '') + '</a>';
 
-			this.navigation += '<li' + (hasChildren ? ' class="dropdown"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren ? ' <b class="caret"></b>' : '') + '</a>';
+				if (hasChildren) {
+					this.structureNavigationRight(navItems, itemId, true);
+				}
 
-			if (hasChildren) {
-				this.structureNavigation(navItems, itemId, true);
-			}
-
-			this.navigation += '</li>';
-
-			var totalPullRights = this.countParentPullRights(navItems[parentId]);
-
-			if (!hasChildren && ((navItems[parentId].length - 1) - totalPullRights) == itemId) {
-				this.navigation += '</ul>';
-			}
-
-			if (current.pullRight) {
-				this.navigation += '</ul>';
+				this.navigationLeft += '</li>';
 			}
 		}
+
+		this.navigationLeft += '</ul>';
+	},
+
+
+
+	structureNavigationLeft: function (navItems, parentId, isChildren) {
+		this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav') + '">';
+
+		for (var itemId in navItems[parentId]) {
+			var hasChildren = navItems[itemId],
+					current = navItems[parentId][itemId];
+
+			if (!current.pullRight || isChildren) {
+				this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren && !isChildren ? ' <b class="caret"></b>' : '') + '</a>';
+
+				if (hasChildren) {
+					this.structureNavigationLeft(navItems, itemId, true);
+				}
+
+				this.navigationLeft += '</li>';
+			}
+		}
+
+		this.navigationLeft += '</ul>';
 	},
 
 

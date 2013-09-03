@@ -68,9 +68,13 @@ var SettingsView = Backbone.View.extend({
 	editItem: function (id) {
 		var data = this.collection.get(id).attributes;
 
+		console.log(data);
+
 		this.$el.find('input[name="id"]').val(data.id);
 		this.$el.find('input[name="name"]').val(data.name);
+		this.$el.find('input[name="href"]').val(data.href);
 		this.$el.find('select').val(data.parent ? data.parent.id : '');
+		this.$el.find('input[name="pullRight"]').prop('checked', data.pullRight);
 	},
 
 
@@ -103,11 +107,13 @@ var SettingsView = Backbone.View.extend({
 
 		var id = this.$el.find('input[name="id"]');
 		var name = this.$el.find('input[name="name"]');
+		var href = this.$el.find('input[name="href"]');
 		var parent = this.$el.find('select');
+		var pullRight = this.$el.find('input[name="pullRight"]').is(':checked');
 		var parentDTO = parent.val() ? this.collection.get(parent.val()) : null;
 
 		if (!id.val()) {
-			this.collection.create({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null}, {
+			this.collection.create({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null, pullRight: pullRight, href: href.val()}, {
 			    success: function () {
 			    	id.val('');
 			    	name.val('');
@@ -117,7 +123,7 @@ var SettingsView = Backbone.View.extend({
 				}
 			});
 		} else {
-			this.collection.get(id.val()).save({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null}, {
+			this.collection.get(id.val()).save({name: name.val(), parent: parentDTO, parentId: parentDTO ? parentDTO.id : null, pullRight: pullRight, href: href.val()}, {
 			    success: function () {
 			    	id.val('');
 			    	name.val('');
