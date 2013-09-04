@@ -37,10 +37,8 @@ require.config({
 });
 
 
-require(['backbone', 'bootstrap', 'container', 'migrations'], function (Backbone, Bootstrap, MainContainer, Migrations) {
+require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, MainContainer) {
     'use strict';
-
-    var migrations = new Migrations();
 
     if (!session.user) {
         location.hash = '#/login';
