@@ -41,11 +41,11 @@ require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, M
     'use strict';
 
     if (!session.user) {
-        location.hash = '#/login';
+        window.location.hash = '#/login';
     }
     else {
-        if (!location.hash) {
-            location.hash = '#/dashboard';
+        if (!window.location.hash) {
+            window.location.hash = '#/dashboard';
         }
     }
 
@@ -53,13 +53,12 @@ require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, M
         routes: {
             ':uri_segment_one': 'redirect'
         }
-    });
-
-    var app_router = new AppRouter;
+    }),
+    app_router = new AppRouter();
 
     app_router.on('route:redirect', function (uri_segment) {
-        if ((!session.user && uri_segment != 'login') || (session.user && uri_segment == 'login')) {
-            location = '/';
+        if ((!session.user && uri_segment !== 'login') || (session.user && uri_segment === 'login')) {
+            window.location = '/';
         }
         else {
             var main = new MainContainer({uri_segment: uri_segment});
@@ -71,8 +70,10 @@ require(['backbone', 'bootstrap', 'container'], function (Backbone, Bootstrap, M
 
 
 require.onError = function (err) {
+    'use strict';
+
     if (err.requireType === 'scripterror') {
-        location = '/';
+        window.location = '/';
     }
 
     throw err;
