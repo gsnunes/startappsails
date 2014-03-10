@@ -1,4 +1,4 @@
-define(['text!templates/login/login.html'], function (template) {
+define(['text!templates/login/LoginView.html'], function (template) {
 
 	'use strict';
 

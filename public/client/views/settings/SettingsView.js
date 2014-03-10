@@ -1,4 +1,4 @@
-define(['text!templates/settings/settings.html', 'collections/NavigationCollection'], function (template, NavigationCollection) {
+define(['text!templates/settings/SettingsView.html', 'collections/NavigationCollection'], function (template, NavigationCollection) {
 
 'use strict';
 

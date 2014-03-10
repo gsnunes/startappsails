@@ -1,4 +1,4 @@
-define(['/client/views/components/NavbarComponent.js'], function(NavbarComponent) {
+define(['/client/views/core/components/NavbarComponentView.js'], function(NavbarComponent) {
 
 'use strict';
 
@@ -14,7 +14,7 @@ var MainContainerView = Backbone.View.extend({
 	initialize: function(args) {
 		var uri_segment = args.uri_segment, self = this;
 
-		require(['/client/views/' + uri_segment + '/' + uri_segment + '.js'], function (AppView) {
+		require(['/client/views/' + uri_segment + '/' + (uri_segment.charAt(0).toUpperCase() + uri_segment.slice(1)) + 'View.js'], function (AppView) {
             var app_view = new AppView;
             self.$el.html(app_view.$el);
 

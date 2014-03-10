@@ -1,4 +1,4 @@
-define(['text!templates/components/NavbarComponent.html', 'collections/NavigationCollection'], function(template, NavigationCollection) {
+define(['text!templates/core/components/NavbarComponentView.html', 'collections/NavigationCollection'], function(template, NavigationCollection) {
 
 'use strict';
 

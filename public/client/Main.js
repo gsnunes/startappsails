@@ -13,7 +13,7 @@ require.config({
 
         bower_components: '/bower_components',
 
-        container: '/client/views/components/MainContainer',
+        container: '/client/views/core/containers/MainContainerView',
         migrations: '/client/views/Migrations'
     },
     shim: {
