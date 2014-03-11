@@ -1,32 +1,38 @@
-define(['/client/views/core/components/NavbarComponentView.js'], function(NavbarComponent) {
+define([
 
-'use strict';
+	'/client/views/core/components/NavbarComponentView.js'
 
-var MainContainerView = Backbone.View.extend({
+], function (NavbarComponent) {
 
-	el: $('#main'),
+	'use strict';
+
+	var MainContainerView = Backbone.View.extend({
+
+		el: $('#main'),
 
 
-	events: {
-	},
+		events: {},
 
 
-	initialize: function(args) {
-		var uri_segment = args.uri_segment, self = this;
+		initialize: function (args) {
+			var uri_segment = args.uri_segment,
+				self = this;
 
-		require(['/client/views/' + uri_segment + '/' + (uri_segment.charAt(0).toUpperCase() + uri_segment.slice(1)) + 'View.js'], function (AppView) {
-            var app_view = new AppView;
-            self.$el.html(app_view.$el);
+			require(['/client/views/' + uri_segment + '/' + (uri_segment.charAt(0).toUpperCase() + uri_segment.slice(1)) + 'View.js'], function (AppView) {
+				var app_view = new AppView(),
+					navbar;
+					
+				self.$el.html(app_view.$el);
 
-            if (uri_segment != 'login') {
-				var navbar = new NavbarComponent();
-				self.$el.prepend(navbar.$el);
-			}
-        });
-	}
+				if (uri_segment !== 'login') {
+					navbar = new NavbarComponent();
+					self.$el.prepend(navbar.$el);
+				}
+			});
+		}
 
-});
+	});
 
-return MainContainerView;
+	return MainContainerView;
 
 });

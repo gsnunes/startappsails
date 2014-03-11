@@ -1,14 +1,18 @@
-define(['models/NavigationModel'], function (NavigationModel) {
+define([
 
-'use strict';
+	'models/NavigationModel'
+	
+], function (NavigationModel) {
 
-var NavigationCollection = Backbone.Collection.extend({
+	'use strict';
 
-	url: '/navigation',
-	model: NavigationModel
+	var NavigationCollection = Backbone.Collection.extend({
 
-});
+		url: '/navigation',
+		model: NavigationModel
 
-return NavigationCollection;
+	});
+
+	return NavigationCollection;
 
 });

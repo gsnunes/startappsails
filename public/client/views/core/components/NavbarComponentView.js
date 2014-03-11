@@ -1,143 +1,158 @@
-define(['text!templates/core/components/NavbarComponentView.html', 'collections/NavigationCollection'], function(template, NavigationCollection) {
+define([
 
-'use strict';
+	'text!templates/core/components/NavbarComponentView.html',
+	'collections/NavigationCollection'
 
-var NavbarComponentView = Backbone.View.extend({
+], function (template, NavigationCollection) {
 
-	el: $(template),
+	'use strict';
 
-	navigationCollection: new NavigationCollection,
+	var NavbarComponentView = Backbone.View.extend({
 
-	navigationLeft: '',
-	navigationRight: '',
+		el: $(template),
 
-	events: {
-		'click a.btn-signout': 'signout'
-	},
+		navigationCollection: new NavigationCollection(),
 
+		navigationLeft: '',
+		navigationRight: '',
 
-
-	initialize: function () {
-		this.getData();
-	},
-
-
-
-	getData: function () {
-		var self = this;
-
-		this.navigationCollection.fetch({
-		    success: function (collection, response) {
-		    	self.populateNavbar();
-		    }
-		});
-	},
+		events: {
+			'click a.btn-signout': 'signout'
+		},
 
 
 
-	populateNavbar: function () {
-		var self = this, navItems = new Array();
-
-		this.$el.find('.nav-collapse').html('');
-
-		this.navigationCollection.forEach(function (data) {
-			var item = data.attributes,
-				parentId = item.parent ? item.parent.id : 0;
-
-			if (!navItems[parentId]) {
-				navItems[parentId] = [];
-			}
-
-			navItems[parentId][item.id] = item;
-		});
-
-		this.structureNavigationLeft(navItems, 0);
-		this.structureNavigationRight(navItems, 0);
-		this.$el.find('.nav-collapse').append(this.navigationLeft);
-		this.$el.find('.nav-collapse').append(this.navigationRight);
-
-		this.setUsername();
-	},
+		initialize: function () {
+			this.getData();
+		},
 
 
 
-	structureNavigationRight: function (navItems, parentId, isChildren) {
-		this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav pull-right') + '">';
+		getData: function () {
+			var self = this;
 
-		for (var itemId in navItems[parentId]) {
-			var hasChildren = navItems[itemId],
-					current = navItems[parentId][itemId];
+			this.navigationCollection.fetch({
+				success: function (collection, response) {
+					self.populateNavbar();
+				}
+			});
+		},
 
-			if (current.pullRight || isChildren) {
-				this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren ? ' <b class="caret"></b>' : '') + '</a>';
 
-				if (hasChildren) {
-					this.structureNavigationRight(navItems, itemId, true);
+
+		populateNavbar: function () {
+			var self = this,
+				navItems = [];
+
+			this.$el.find('.nav-collapse').html('');
+
+			this.navigationCollection.forEach(function (data) {
+				var item = data.attributes,
+					parentId = item.parent ? item.parent.id : 0;
+
+				if (!navItems[parentId]) {
+					navItems[parentId] = [];
 				}
 
-				this.navigationLeft += '</li>';
-			}
-		}
+				navItems[parentId][item.id] = item;
+			});
 
-		this.navigationLeft += '</ul>';
-	},
+			this.structureNavigationLeft(navItems, 0);
+			this.structureNavigationRight(navItems, 0);
+			this.$el.find('.nav-collapse').append(this.navigationLeft);
+			this.$el.find('.nav-collapse').append(this.navigationRight);
+
+			this.setUsername();
+		},
 
 
 
-	structureNavigationLeft: function (navItems, parentId, isChildren) {
-		this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav') + '">';
+		structureNavigationRight: function (navItems, parentId, isChildren) {
+			var itemId, hasChildren, current;
 
-		for (var itemId in navItems[parentId]) {
-			var hasChildren = navItems[itemId],
+			this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav pull-right') + '">';
+
+			for (itemId in navItems[parentId]) {
+				if (navItems[parentId][itemId]) {
+					hasChildren = navItems[itemId];
 					current = navItems[parentId][itemId];
 
-			if (!current.pullRight || isChildren) {
-				this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren && !isChildren ? ' <b class="caret"></b>' : '') + '</a>';
+					if (current.pullRight || isChildren) {
+						this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren ? ' <b class="caret"></b>' : '') + '</a>';
 
-				if (hasChildren) {
-					this.structureNavigationLeft(navItems, itemId, true);
+						if (hasChildren) {
+							this.structureNavigationRight(navItems, itemId, true);
+						}
+
+						this.navigationLeft += '</li>';
+					}
 				}
-
-				this.navigationLeft += '</li>';
 			}
+
+			this.navigationLeft += '</ul>';
+		},
+
+
+
+		structureNavigationLeft: function (navItems, parentId, isChildren) {
+			var itemId, hasChildren, current;
+
+			this.navigationLeft += '<ul class="' + (isChildren ? 'dropdown-menu' : 'nav') + '">';
+
+			for (itemId in navItems[parentId]) {
+				if (navItems[parentId][itemId]) {
+					hasChildren = navItems[itemId];
+					current = navItems[parentId][itemId];
+
+					if (!current.pullRight || isChildren) {
+						this.navigationLeft += '<li' + (hasChildren ? ' class="' + (current.parentId ? 'dropdown-submenu' : 'dropdown') + '"' : '') + '><a class="' + (hasChildren ? 'dropdown-toggle ' : '') + (current.className ? current.className : '') + '" ' + (hasChildren ? 'data-toggle="dropdown"' : '') + ' href="' + current.href + '">' + current.name + (hasChildren && !isChildren ? ' <b class="caret"></b>' : '') + '</a>';
+
+						if (hasChildren) {
+							this.structureNavigationLeft(navItems, itemId, true);
+						}
+
+						this.navigationLeft += '</li>';
+					}
+				}
+			}
+
+			this.navigationLeft += '</ul>';
+		},
+
+
+
+		countParentPullRights: function (parent) {
+			var totalPullRights = 0,
+				i, len = parent.length;
+
+			for (i = 0; i < len; i++) {
+				if (parent[i] && parent[i].pullRight) {
+					totalPullRights++;
+				}
+			}
+
+			return totalPullRights;
+		},
+
+
+
+		setUsername: function () {
+			var elem = this.$el.find('.dropdown-toggle-username');
+			elem.html(elem.text() + ' ' + session.user.username + ' <b class="caret"></b>');
+		},
+
+
+
+		signout: function (ev) {
+			$.post('/user/signout', function (res) {
+				window.location = '/';
+			}).fail(function (res) {
+				alert('Error: ' + res.getResponseHeader('error'));
+			});
 		}
 
-		this.navigationLeft += '</ul>';
-	},
+	});
 
-
-
-	countParentPullRights: function (parent) {
-		var totalPullRights = 0;
-
-		for (var i = 0, len = parent.length; i < len; i++) {
-			if (parent[i] && parent[i].pullRight) {
-				totalPullRights++;
-			}
-		}
-
-		return totalPullRights;
-	},
-
-
-
-	setUsername: function () {
-		var elem = this.$el.find('.dropdown-toggle-username');
-		elem.html(elem.text() + ' ' + session.user.username + ' <b class="caret"></b>');
-	},
-
-
-
-	signout: function (ev) {
-		$.post('/user/signout', function (res) {
-			location = '/';
-		}).fail(function (res) {
-			alert('Error: ' + res.getResponseHeader('error'));
-		});
-	}
-
-});
-
-return NavbarComponentView;
+	return NavbarComponentView;
 
 });
