@@ -15,7 +15,7 @@ define([
 
 
 		add: function (name, content, active) {
-			var uniqueId = _.uniqueId(),
+			var uniqueId = _.uniqueId('tab_'),
 				activeClass = active ? 'active' : '',
 				myContent = $('<div class="tab-pane fade in ' + activeClass + '" id="' + uniqueId + '"></div>');
 

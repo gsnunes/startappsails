@@ -1,10 +1,12 @@
 define([
 
 	'text!templates/settings/SettingsView.html',
+	'/client/views/core/components/TabComponentView.js',
 	'/client/views/settings/NavigationTabView.js',
-	'/client/views/core/components/TabComponentView.js'
+	'/client/views/settings/GeneralTabView.js',
+	'/client/views/settings/BowerTabView.js'
 	
-], function (template, NavigationTabView, TabComponentView) {
+], function (template, TabComponentView, NavigationTabView, GeneralTabView, BowerTabView) {
 
 	'use strict';
 
@@ -20,9 +22,13 @@ define([
 
 		createTabs: function () {
 			var tabComponentView = new TabComponentView(),
-				navigationTabView = new NavigationTabView();
+				navigationTabView = new NavigationTabView(),
+				generalTabView = new GeneralTabView(),
+				bowerTabView = new BowerTabView();
 
-			tabComponentView.add('Navigation', navigationTabView, true);
+			tabComponentView.add('General', generalTabView, true);
+			tabComponentView.add('Navigation', navigationTabView, false);
+			tabComponentView.add('Bower', bowerTabView, false);
 
 			this.$el.find('.settings-box').html(tabComponentView.$el);
 		}
